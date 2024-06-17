@@ -28,7 +28,7 @@ export default function Navigation({
             <a href="#">Support</a>
           </li>
           <li>
-            <a href="#">Log In</a>
+            <a href="/login">Log In</a>
           </li>
           <li>
             <Button className="bg-softBlue bg-opacity-50 hover:bg-opacity-100">
@@ -67,7 +67,7 @@ export default function Navigation({
                   <a href="#">Support</a>
                 </li>
                 <li>
-                  <a href="#">Log In</a>
+                  <a href="/login">Log In</a>
                 </li>
               </ul>
             </div>

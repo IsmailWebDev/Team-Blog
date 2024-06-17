@@ -8,7 +8,7 @@ export default function Footer() {
         <div className="flex flex-col gap-4">
           <a href="/">
             <Image
-              src="images/icons/Logo.svg"
+              src="/images/icons/Logo.svg"
               alt="Logo"
               width={132}
               height={52}
@@ -74,7 +74,7 @@ export default function Footer() {
             type="text"
             placeholder="Email"
             className="bg-slate-600 placeholder:text-white"
-            icon="images/icons/arrow_forward_24px-white.svg"
+            icon="/images/icons/arrow_forward_24px-white.svg"
           />
         </div>
       </div>
