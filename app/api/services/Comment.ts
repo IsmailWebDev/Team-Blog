@@ -1,5 +1,20 @@
 import { Comment } from "@/app/interfaces/comments.interface";
 
+export async function fetchCommentsByPostId(
+  postId: number,
+): Promise<Comment[]> {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/comments/${postId}`,
+  );
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch comments");
+  }
+
+  const { data } = await response.json();
+  return data;
+}
+
 export async function createComment(
   postId: number,
   commenterId: number,
@@ -19,7 +34,8 @@ export async function createComment(
     throw new Error("Failed to create comment");
   }
 
-  return response.json();
+  const { data } = await response.json();
+  return data;
 }
 
 export async function updateComment(

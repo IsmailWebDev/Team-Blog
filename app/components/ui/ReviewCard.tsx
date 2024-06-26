@@ -5,20 +5,15 @@ interface ReviewCardProps {
   name: string;
   profession: string;
   picture: string;
-  sliderId: number;
 }
 export default function ReviewCard({
   text,
   name,
   profession,
   picture,
-  sliderId,
 }: ReviewCardProps) {
   return (
-    <div
-      id={`slide${sliderId}`}
-      className="carousel-item my-11 box-border flex w-64 shrink-0 flex-col gap-8 bg-white px-8 py-11 shadow-xl lg:w-96"
-    >
+    <div className="my-11 box-border flex w-64 shrink-0 flex-col gap-8 bg-white px-8 py-11 shadow-xl lg:w-96">
       <div className="flex">
         <Image src="/images/icons/Star.svg" alt="Star" width={32} height={32} />
         <Image src="/images/icons/Star.svg" alt="Star" width={32} height={32} />

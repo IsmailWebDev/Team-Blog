@@ -1,25 +1,25 @@
 import Image from "next/image";
 export default function SideBySide() {
   return (
-    <section className="grid w-[1440px] max-w-full items-center gap-14 py-24 sm:grid-cols-2 lg:mx-auto">
+    <section className="grid w-[1440px] max-w-full items-center gap-14 py-24 max-lg:items-start sm:grid-cols-2 lg:mx-auto lg:max-w-[90%] lg:gap-36">
       <div className="relative sm:order-1">
         <Image
           src="/images/Image1.png"
           alt="Image1"
           width={565}
           height={565}
-          className="w-full"
+          className="w-full max-sm:w-[90%]"
         />
         <Image
           src="/images/Calender.png"
           alt="Calendar"
           width={256}
           height={110}
-          className="absolute right-5 top-5 w-40 lg:w-64"
+          className="absolute right-5 top-5 w-40 max-sm:right-20 lg:w-64"
         />
       </div>
 
-      <div className="mx-auto flex max-w-[90%] flex-col gap-12 sm:order-2">
+      <div className="flex flex-col gap-12 max-lg:mx-auto max-lg:w-[90%] sm:order-2">
         <h2 className="max-w-[16ch] text-5xl font-bold leading-[64px] text-darkBlue">
           Chats for your distributed teams
         </h2>
@@ -46,25 +46,25 @@ export default function SideBySide() {
           alt="Image2"
           width={565}
           height={565}
-          className="w-full"
+          className="w-full max-sm:w-[90%]"
         />
         <Image
           src="/images/Sbs2img1.png"
           alt="SBS 2 Image 1"
           width={256}
           height={110}
-          className="absolute right-5 w-40 max-lg:top-5 lg:bottom-72 lg:w-64"
+          className="absolute right-5 w-40 max-lg:top-5 max-sm:right-20 lg:bottom-72 lg:w-64"
         />
         <Image
           src="/images/Sbs2img2.png"
           alt="SBS 2 Image 2"
           width={256}
           height={110}
-          className="absolute right-5 w-40 max-lg:top-28 lg:bottom-5 lg:w-64"
+          className="absolute right-5 w-40 max-lg:top-28 max-sm:right-20 lg:bottom-5 lg:w-64"
         />
       </div>
 
-      <div className="flex max-w-[80%] flex-col gap-12 max-xl:mx-auto sm:order-3">
+      <div className="flex flex-col gap-12 max-xl:mx-auto max-lg:w-[90%] sm:order-3 max-lg:sm:max-w-[80%]">
         <h2 className="max-w-[16ch] text-5xl font-bold leading-[64px] text-darkBlue">
           Choose how you want to work
         </h2>
@@ -91,7 +91,7 @@ export default function SideBySide() {
           alt="Image3"
           width={565}
           height={565}
-          className="w-full"
+          className="w-full max-sm:w-[90%]"
         />
         <Image
           src="/images/Sbs3img1.png"
@@ -109,7 +109,7 @@ export default function SideBySide() {
         />
       </div>
 
-      <div className="mx-auto flex max-w-[90%] flex-col gap-12 sm:order-6">
+      <div className="flex flex-col gap-12 max-lg:mx-auto max-lg:w-[90%] sm:order-6">
         <h2 className="max-w-[16ch] text-5xl font-bold leading-[64px] text-darkBlue">
           Move faster with your Team tools
         </h2>

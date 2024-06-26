@@ -3,22 +3,28 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { createComment } from "@/app/api/services/Comment";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface CommentFormProps {
   postId: number;
   userId: number | undefined;
 }
 
-export default function CommentForm({ postId, userId }: CommentFormProps) {
+export default function CreateCommentForm({
+  postId,
+  userId,
+}: CommentFormProps) {
   const [commentContent, setCommentContent] = useState("");
   const router = useRouter();
+  const queryClient = useQueryClient();
 
   const handleSubmitComment = async () => {
     if (userId && commentContent.trim() !== "") {
       try {
         await createComment(Number(postId), userId, commentContent);
+        await queryClient.invalidateQueries({ queryKey: ["comments"] });
+
         setCommentContent("");
-        router.refresh();
       } catch (error) {
         console.error("Failed to submit comment:", error);
       }

@@ -1,19 +1,25 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { deleteComment } from "@/app/api/services/Comment";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface DeleteCommentProps {
   commentId: number;
+  postId: number;
 }
 
-export default function DeleteComment({ commentId }: DeleteCommentProps) {
-  const router = useRouter();
+export default function DeleteComment({
+  commentId,
+  postId,
+}: DeleteCommentProps) {
+  const queryClient = useQueryClient();
 
   const handleDelete = async () => {
     try {
       await deleteComment(commentId);
-      router.refresh();
+      await queryClient.invalidateQueries({
+        queryKey: ["comments"],
+      });
     } catch (error) {
       console.error("Failed to delete comment:", error);
     }

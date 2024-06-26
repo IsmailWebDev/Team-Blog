@@ -3,9 +3,9 @@ import Input from "./Input";
 
 export default function Footer() {
   return (
-    <footer className="bg-darkBlue pt-24 text-offWhite">
+    <footer className="bg-darkBlue pt-24 text-offWhite max-sm:grid max-sm:grid-cols-1">
       <div className="mx-auto flex w-[1440px] max-w-[90%] flex-wrap items-start gap-16 max-xl:flex-col">
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4 max-sm:order-1">
           <a href="/">
             <Image
               src="/images/icons/Logo.svg"
@@ -14,10 +14,11 @@ export default function Footer() {
               height={52}
             />
           </a>
-
-          <p>Collaboration platform for mordern team </p>
+          <p>
+            Collaboration platform <br /> for mordern team
+          </p>
         </div>
-        <div className="flex items-start gap-8 max-sm:text-xs lg:gap-44 xl:gap-24">
+        <div className="flex items-start gap-8 max-sm:order-3 max-sm:flex-col lg:gap-44 xl:gap-24">
           <div className="flex flex-col gap-4">
             <h3 className="text-2xl text-softBlue">Company</h3>
             <ul className="flex flex-col gap-4">
@@ -67,7 +68,7 @@ export default function Footer() {
             </ul>
           </div>
         </div>
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4 max-sm:order-2">
           <h3 className="text-2xl text-softBlue">Stay up to date </h3>
           <p>Subscribe to our newseller</p>
           <Input

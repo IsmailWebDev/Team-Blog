@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { fetchPost, updatePost } from "@/app/api/services/Post";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface UpdatePostProps {
   postId: number;
@@ -14,6 +15,7 @@ export default function UpdatePostForm({ postId }: UpdatePostProps) {
   const [content, setContent] = useState("");
   const [thumbnail, setThumbnail] = useState<File | null>(null);
   const router = useRouter();
+  const queryClient = useQueryClient();
 
   useEffect(() => {
     const fetchPostData = async () => {
@@ -41,6 +43,7 @@ export default function UpdatePostForm({ postId }: UpdatePostProps) {
         formData.append("thumbnail", thumbnail);
       }
       await updatePost(postId, formData);
+      await queryClient.invalidateQueries({ queryKey: ["post", postId] });
       router.push(`/blog/${postId}`);
     } catch (error) {
       console.error("Failed to update post:", error);

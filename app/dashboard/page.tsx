@@ -6,7 +6,7 @@ import { getAuthToken } from "../hooks/getAuthToken";
 export default async function Dashboard() {
   const token = await getAuthToken();
   if (!token) {
-    redirect("/login");
+    redirect("/register");
   }
 
   const parts = token.split(".");
@@ -16,7 +16,9 @@ export default async function Dashboard() {
   const userId = parsedPayload.id;
 
   const user = await fetchUser(userId);
-
+  if (!user) {
+    redirect("/register");
+  }
   return (
     <main className="container mx-auto">
       <h1 className="mb-4 text-2xl font-bold">User Dashboard</h1>

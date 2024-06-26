@@ -1,6 +1,6 @@
 import { Comment } from "@/app/interfaces/comments.interface";
 import Image from "next/image";
-import EditCommentForm from "./EditCommentForm";
+import UpdateCommentForm from "./UpdateCommentForm";
 import DeleteComment from "./DeleteComment";
 
 interface CommentWithUserData extends Comment {
@@ -13,9 +13,14 @@ interface CommentWithUserData extends Comment {
 interface CommentListProps {
   comments: CommentWithUserData[];
   userId?: number;
+  postId: number;
 }
 
-export default function CommentList({ comments, userId }: CommentListProps) {
+export default function CommentList({
+  comments,
+  userId,
+  postId,
+}: CommentListProps) {
   return (
     <div className="mt-8">
       <h3 className="mb-4 text-lg text-darkBlue">Comments</h3>
@@ -34,11 +39,12 @@ export default function CommentList({ comments, userId }: CommentListProps) {
           </div>
           {userId && userId === comment.commenterId && (
             <div className="flex items-center gap-2">
-              <EditCommentForm
+              <UpdateCommentForm
                 commentId={comment.id}
                 initialContent={comment.content}
+                postId={postId}
               />
-              <DeleteComment commentId={comment.id} />
+              <DeleteComment commentId={comment.id} postId={postId} />
             </div>
           )}
         </div>

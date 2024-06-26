@@ -1,21 +1,23 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { updateComment } from "@/app/api/services/Comment";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface EditCommentFormProps {
   commentId: number;
   initialContent: string;
+  postId: number;
 }
 
-export default function EditCommentForm({
+export default function UpdateCommentForm({
   commentId,
   initialContent,
+  postId,
 }: EditCommentFormProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [content, setContent] = useState(initialContent);
-  const router = useRouter();
+  const queryClient = useQueryClient();
 
   const handleEditClick = () => {
     setIsEditing(true);
@@ -30,7 +32,9 @@ export default function EditCommentForm({
     e.preventDefault();
     try {
       await updateComment(commentId, content);
-      router.refresh();
+      await queryClient.invalidateQueries({ queryKey: ["comments"] });
+      console.log(postId);
+
       setIsEditing(false);
     } catch (error) {
       console.error("Failed to update comment:", error);

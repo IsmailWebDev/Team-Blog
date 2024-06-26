@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function Mockup() {
   return (
-    <section className="w-[1440px] max-w-full items-center gap-14 pt-24 lg:mx-auto lg:grid lg:grid-cols-2">
+    <section className="mx-auto w-[1440px] max-w-full items-center gap-14 pt-24 lg:grid lg:max-w-[90%] lg:grid-cols-2">
       <Image
         src="/images/mockup.png"
         alt="Mockup"
@@ -10,7 +10,7 @@ export default function Mockup() {
         height={654}
         className="max-w-[800px] translate-x-[15%] max-xl:mb-12 sm:order-1 xl:translate-x-[0%]"
       />
-      <div className="flex max-w-[90%] flex-col gap-12 max-xl:mx-auto">
+      <div className="flex flex-col gap-12 max-lg:mx-auto max-lg:max-w-[90%]">
         <h2 className="max-w-[16ch] text-5xl font-bold leading-[64px] text-darkBlue">
           Chats for your distributed teams
         </h2>

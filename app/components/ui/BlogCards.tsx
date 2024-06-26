@@ -1,83 +1,72 @@
 "use client";
+import { useQuery } from "@tanstack/react-query";
 import { fetchPosts } from "@/app/api/services/Post";
 import BlogCard from "./BlogCard";
 import Button from "./Button";
-import { useState, useEffect, useCallback } from "react";
+import { useState } from "react";
 import { Post } from "@/app/interfaces/posts.interface";
 
-async function fetchInitialPosts() {
-  const limit = 9;
-  const initialCursor = 0;
-  const data = await fetchPosts(limit, initialCursor);
-  return data;
-}
-
 export default function BlogCards() {
-  const [allPosts, setAllPosts] = useState<Post[]>([]);
-  const [nextCursor, setNextCursor] = useState<number>();
-  const [deletedPosts, setDeletedPosts] = useState(0);
-  const [previousCursor, setPreviousCursor] = useState<number>();
+  const [cursor, setCursor] = useState<number | undefined>(undefined);
+  const [previousCursors, setPreviousCursors] = useState<number[]>([]);
+  const limit = 9;
 
-  useEffect(() => {
-    async function fetchData() {
-      const { allPosts, nextCursor, deletedPosts } = await fetchInitialPosts();
-      setAllPosts(allPosts);
-      setNextCursor(nextCursor);
-      setDeletedPosts(deletedPosts);
+  const { isPending, isError, error, data, isFetching } = useQuery({
+    queryKey: ["posts", cursor],
+    queryFn: () => fetchPosts(limit, cursor),
+    staleTime: 0,
+  });
+
+  const handleNextPage = () => {
+    if (data?.nextCursor) {
+      setPreviousCursors((prev) => [...prev, cursor as number]);
+      setCursor(data.nextCursor);
     }
-    fetchData();
-  }, []);
+  };
 
-  const loadMore = useCallback(async () => {
-    const limit = 9;
-    const { allPosts: newPosts, nextCursor: newCursor } = await fetchPosts(
-      limit,
-      nextCursor,
-    );
-    setAllPosts(newPosts);
-    setPreviousCursor(nextCursor);
-    setNextCursor(newCursor);
-  }, [nextCursor]);
+  const handlePreviousPage = () => {
+    const prevCursor = previousCursors.pop();
+    setPreviousCursors([...previousCursors]);
+    setCursor(prevCursor);
+  };
 
-  const loadPrevious = useCallback(async () => {
-    const limit = 9;
-    const cursor = previousCursor || 0;
-    const { allPosts: newPosts, nextCursor: newCursor } = await fetchPosts(
-      limit,
-      cursor - (limit + deletedPosts),
-    );
-    setAllPosts(newPosts);
-    setPreviousCursor(cursor - (limit + deletedPosts));
-    setNextCursor(newCursor);
-  }, [previousCursor, deletedPosts]);
+  const hasPreviousPage = previousCursors.length > 0;
+  const hasNextPage = data?.nextCursor != null;
 
   return (
     <>
-      <div className="mb-16 grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-3">
-        {allPosts.map((post) => (
-          <BlogCard key={post.id} data={post} />
-        ))}
-      </div>
-      <div className="flex justify-center gap-4 pb-8">
-        {previousCursor === 0
-          ? undefined
-          : previousCursor && (
+      {isPending ? (
+        <div>Loading...</div>
+      ) : isError ? (
+        <div>Error: {(error as Error).message}</div>
+      ) : (
+        <>
+          <div className="mb-16 grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-3">
+            {data.allPosts.map((post: Post) => (
+              <BlogCard key={post.id} data={post} />
+            ))}
+          </div>
+          <div className="flex justify-center gap-4 pb-8">
+            {hasPreviousPage && (
               <Button
                 className="bg-softBlue bg-opacity-50 text-black hover:bg-opacity-100"
-                onClick={loadPrevious}
+                onClick={handlePreviousPage}
               >
                 Previous
               </Button>
             )}
-        {nextCursor && (
-          <Button
-            className="bg-softBlue bg-opacity-50 text-black hover:bg-opacity-100"
-            onClick={loadMore}
-          >
-            Next
-          </Button>
-        )}
-      </div>
+            {hasNextPage && (
+              <Button
+                className="bg-softBlue bg-opacity-50 text-black hover:bg-opacity-100"
+                onClick={handleNextPage}
+              >
+                Next
+              </Button>
+            )}
+          </div>
+          {isFetching ? <div>Loading...</div> : null}
+        </>
+      )}
     </>
   );
 }

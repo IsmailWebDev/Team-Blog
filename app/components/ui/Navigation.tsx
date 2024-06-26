@@ -31,9 +31,11 @@ export default function Navigation({
             <a href="/login">Log In</a>
           </li>
           <li>
-            <Button className="bg-softBlue bg-opacity-50 hover:bg-opacity-100">
-              Get Access
-            </Button>
+            <a href="/dashboard">
+              <Button className="bg-softBlue bg-opacity-50 hover:bg-opacity-100">
+                Get Access
+              </Button>
+            </a>
           </li>
         </ul>
         <div className="cursor-pointer lg:hidden">

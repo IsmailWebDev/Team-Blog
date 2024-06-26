@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Lexend_Deca } from "next/font/google";
 import "./globals.css";
-
+import { ReactQueryClientProvider } from "./components/providers/queryClient";
 const lexend_Deca = Lexend_Deca({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -19,7 +19,7 @@ export default function RootLayout({
       <body
         className={`${lexend_Deca.className} overflow-x-hidden bg-offWhite`}
       >
-        {children}
+        <ReactQueryClientProvider> {children} </ReactQueryClientProvider>
       </body>
     </html>
   );
