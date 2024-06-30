@@ -29,7 +29,7 @@ export default function BlogCard({ data }: CardProps) {
         <p className="text-darkBlue">{data.excerpt}</p>
         <div className="mt-auto flex items-center gap-2 justify-self-end text-desaturatedBlue">
           <Image
-            src={`${process.env.NEXT_PUBLIC_API_URL}/images/${data.author.profilePic}`}
+            src={`${process.env.NEXT_PUBLIC_API_URL}/images/${data.author.profilePic || "default-profilePic.png"}`}
             alt="Blog Avatar 1 "
             width={48}
             height={48}
